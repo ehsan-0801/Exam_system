@@ -9,8 +9,10 @@ import { FaFile } from "react-icons/fa";
 import { GrStorage } from "react-icons/gr";
 import { IoSettingsOutline } from "react-icons/io5";
 import { MdOutlineQuestionMark } from "react-icons/md";
+import { usePathname, useRouter } from 'next/navigation';
 const Sidebar = () => {
-    const [activeLink, setActiveLink] = useState(window.location.pathname); // Initial active link
+    const router = useRouter();
+    const [activeLink, setActiveLink] = useState(router.pathname); // Initial active link
 
     const handleLinkClick = (href) => {
         setActiveLink(href); // Update activeLink on link click
