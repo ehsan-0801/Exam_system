@@ -56,11 +56,11 @@ const ExamDetails = () => {
                 <div>
                     <div className='grid grid-cols-2 my-4'>
                         <h1>Created By</h1>
-                        <p className='text-[#914AD9] font-bold ml-2'>: { examData.createdBy }</p>
+                        <p className='text-[#914AD9] font-bold'>: { examData.createdBy }</p>
                     </div>
                     <div className='grid grid-cols-2'>
                         <h1>Date</h1>
-                        <p className='text-[#914AD9] font-bold ml-2'>: { examData.date }</p>
+                        <p className='text-[#914AD9] font-bold'>: { examData.date }</p>
                     </div>
                 </div>
                 <div className='ml-4 relative'>
@@ -89,13 +89,13 @@ const ExamDetails = () => {
                 <p>Subject: { examData.subject }</p>
             </div>
             <div className='flex items-center justify-between'>
-                <p className='text-[#5B93FF] font-bold p-2 rounded bg-[#dcdfe5]'>
+                <p className='text-[#5B93FF] text-xs font-bold p-2 rounded bg-[#dcdfe5]'>
                     Correct Mark: { examData.correctMarks }
                 </p>
-                <p className='text-[#E71D36] font-bold p-2 rounded bg-[#f7d1d1]'>
+                <p className='text-[#E71D36] text-xs font-bold p-2 rounded bg-[#f7d1d1]'>
                     Wrong Mark: { examData.wrongMarks }
                 </p>
-                <p className='text-[#3A974C] font-bold p-2 rounded bg-[#cbe3c7]'>
+                <p className='text-[#3A974C] text-xs font-bold p-2 rounded bg-[#cbe3c7]'>
                     MCQ: { examData.mcqCount }
                 </p>
             </div>

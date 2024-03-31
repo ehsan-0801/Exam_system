@@ -1,4 +1,5 @@
-import React from 'react';
+"use client"
+import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import Image from "next/image";
 import { FaPlus, FaRegUser } from "react-icons/fa6";
@@ -9,9 +10,14 @@ import { GrStorage } from "react-icons/gr";
 import { IoSettingsOutline } from "react-icons/io5";
 import { MdOutlineQuestionMark } from "react-icons/md";
 const Sidebar = () => {
+    const [activeLink, setActiveLink] = useState(window.location.pathname); // Initial active link
+
+    const handleLinkClick = (href) => {
+        setActiveLink(href); // Update activeLink on link click
+    };
     return (
         <div>
-            <aside className="sidebar w-[300px] h-screen bg-white text-black p-4 h-screen shadow-lg shadow-zinc-900 sticky">
+            <aside className="w-[300px] bg-white text-black p-4 shadow-md shadow-zinc-900 sticky h-screen">
                 {/* Your sidebar links here */ }
                 <div>
                     <Image src="/image 5.png" alt="Illustration" width={ 100 } height={ 100 } className='my-2 mx-auto' />
@@ -27,40 +33,58 @@ const Sidebar = () => {
                         </button>
                     </Link>
                 </div>
-                <nav className='my-6 ml-20'>
-                    <div>
-                        <Link href="/adminPanel/Dashboard" className="flex items-center my-6">
+                <nav>
+                    <div className="">
+                        <Link
+                            href="/adminPanel/Dashboard"
+                            onClick={ () => handleLinkClick('/adminPanel/Dashboard') }
+                            className={ `flex items-center ${activeLink === '/adminPanel/Dashboard' ? 'text-[#013D6A] font-bold rounded bg-[#F1F9FF] py-3 px-3 rounded-md' : 'py-3 px-3'}` }
+                        >
                             <MdOutlineDesktopMac className="mr-4" />
                             <span>Dashboard</span>
                         </Link>
                     </div>
-                    <div>
-                        <Link href="/adminPanel/ExamsProfile" className="flex items-center my-6">
+                    <div className="">
+                        <Link href="/adminPanel/ExamsProfile"
+                            onClick={ () => handleLinkClick('/adminPanel/ExamsProfile') }
+                            className={ `flex items-center ${activeLink === '/adminPanel/ExamsProfile' ? 'text-[#013D6A] font-bold rounded bg-[#F1F9FF] py-3 px-3 rounded-md' : 'py-3 px-3'}` }>
                             <ImProfile className="mr-4" />
                             <span>Exams Profile</span>
                         </Link>
                     </div>
-                    <div>
-                        <Link href="/adminPanel/Results" className="flex items-center my-6">
+                    <div className="">
+                        <Link href="/adminPanel/Results"
+                            onClick={ () => handleLinkClick('/adminPanel/Results') }
+                            className={ `flex items-center ${activeLink === '/adminPanel/Results' ? 'text-[#013D6A] font-bold rounded bg-[#F1F9FF] py-3 px-3 rounded-md' : 'py-3 px-3'}` }
+                        >
                             <FaFile className="mr-4" />
                             <span>Results</span>
                         </Link>
                     </div>
-                    <div>
-                        <Link href="/adminPanel/Storage" className="flex items-center my-6">
+                    <div className="">
+                        <Link
+                            href="/adminPanel/Storage"
+                            onClick={ () => handleLinkClick('/adminPanel/Storage') }
+                            className={ `flex items-center ${activeLink === '/adminPanel/Storage' ? 'text-[#013D6A] font-bold rounded bg-[#F1F9FF] py-3 px-3 rounded-md' : 'py-3 px-3'}` }
+                        >
                             <GrStorage className="mr-4" />
                             <span>Storage</span>
                         </Link>
                     </div>
-                    <div>
-                        <Link href="/adminPanel/Tenants" className="flex items-center my-6">
+                    <div className="">
+                        <Link
+                            href="/adminPanel/Tenants"
+                            onClick={ () => handleLinkClick('/adminPanel/Tenants') }
+                            className={ `flex items-center mx-container ${activeLink === '/adminPanel/Tenants' ? 'text-[#013D6A] font-bold rounded bg-[#F1F9FF] py-3 px-3 rounded-md' : 'py-3 px-3'}` }>
                             <FaRegUser className="mr-4" />
                             <span>Tenants</span>
                         </Link>
                     </div>
 
-                    <div>
-                        <Link href="/adminPanel/Settings" className="flex items-center my-6">
+                    <div className="">
+                        <Link href="/adminPanel/Settings"
+                            onClick={ () => handleLinkClick('/adminPanel/Settings') }
+                            className={ `flex items-center mx-container ${activeLink === '/adminPanel/Settings' ? 'text-[#013D6A] font-bold rounded bg-[#F1F9FF] py-3 px-3 rounded-md' : 'py-3 px-3'}` }>
                             <IoSettingsOutline className="mr-4" />
                             <span>Settings</span>
                         </Link>
