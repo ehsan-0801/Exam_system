@@ -24,10 +24,14 @@ const Dashboard = () => {
                 </div>
             </div> */}
             <Header header={ 'Welcome Hasan' } subheader={ 'Super Admin' } />
-            <div className='flex items-center'>
-                <Stats />
-                <DoughnutChart />
-                <DoughnutChart2 />
+            <div className='grid grid-cols-2'>
+                <div>
+                    <Stats />
+                </div>
+                <div className='flex items-center justify-between'>
+                    <DoughnutChart />
+                    <DoughnutChart2 />
+                </div>
             </div>
             <div>
                 <RecentCustomers />

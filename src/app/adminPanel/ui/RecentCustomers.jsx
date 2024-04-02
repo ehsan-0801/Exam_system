@@ -28,8 +28,8 @@ const RecentCustomers = () => {
     const data = generateRandomData(10);
 
     return (
-        <div>
-            <div className='flex items-center justify-between'>
+        <div className='mr-4 border-2 border-gray-300 rounded shadow-md shadow-gray-300 p-4'>
+            <div className='flex items-center justify-between '>
                 <h1 className='mx-1'>Recent Customers</h1>
                 <div className="mb-4">
                     <select

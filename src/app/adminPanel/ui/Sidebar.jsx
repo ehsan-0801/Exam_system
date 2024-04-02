@@ -19,7 +19,7 @@ const Sidebar = () => {
     };
     return (
         <div>
-            <aside className="w-[300px] bg-white text-black p-4 shadow-md shadow-zinc-900 sticky h-screen">
+            <aside className="bg-white text-black p-4 shadow-md shadow-gray-300 border-r-2 border-gray-300 h-screen">
                 {/* Your sidebar links here */ }
                 <div>
                     <Image src="/image 5.png" alt="Illustration" width={ 100 } height={ 100 } className='my-2 mx-auto' />
@@ -29,67 +29,69 @@ const Sidebar = () => {
                 </div>
                 <div className='my-3'>
                     <Link href="/adminPanel/NewExam" className="block mb-4 font-semibold">
-                        <button className='bg-[#013D6A] text-white w-[279px] p-2 rounded-md flex justify-center items-center'>
+                        <button className='bg-[#013D6A] text-white w-full p-2 rounded-md flex justify-center items-center'>
                             <FaPlus />
                             New Exam
                         </button>
                     </Link>
                 </div>
-                <nav>
-                    <div className="">
-                        <Link
-                            href="/adminPanel/Dashboard"
-                            onClick={ () => handleLinkClick('/adminPanel/Dashboard') }
-                            className={ `flex items-center ${activeLink === '/adminPanel/Dashboard' ? 'text-[#013D6A] font-bold rounded bg-[#F1F9FF] py-3 px-3 rounded-md' : 'py-3 px-3'}` }
-                        >
-                            <MdOutlineDesktopMac className="mr-4" />
-                            <span>Dashboard</span>
-                        </Link>
-                    </div>
-                    <div className="">
-                        <Link href="/adminPanel/ExamsProfile"
-                            onClick={ () => handleLinkClick('/adminPanel/ExamsProfile') }
-                            className={ `flex items-center ${activeLink === '/adminPanel/ExamsProfile' ? 'text-[#013D6A] font-bold rounded bg-[#F1F9FF] py-3 px-3 rounded-md' : 'py-3 px-3'}` }>
-                            <ImProfile className="mr-4" />
-                            <span>Exams Profile</span>
-                        </Link>
-                    </div>
-                    <div className="">
-                        <Link href="/adminPanel/Results"
-                            onClick={ () => handleLinkClick('/adminPanel/Results') }
-                            className={ `flex items-center ${activeLink === '/adminPanel/Results' ? 'text-[#013D6A] font-bold rounded bg-[#F1F9FF] py-3 px-3 rounded-md' : 'py-3 px-3'}` }
-                        >
-                            <FaFile className="mr-4" />
-                            <span>Results</span>
-                        </Link>
-                    </div>
-                    <div className="">
-                        <Link
-                            href="/adminPanel/Storage"
-                            onClick={ () => handleLinkClick('/adminPanel/Storage') }
-                            className={ `flex items-center ${activeLink === '/adminPanel/Storage' ? 'text-[#013D6A] font-bold rounded bg-[#F1F9FF] py-3 px-3 rounded-md' : 'py-3 px-3'}` }
-                        >
-                            <GrStorage className="mr-4" />
-                            <span>Storage</span>
-                        </Link>
-                    </div>
-                    <div className="">
-                        <Link
-                            href="/adminPanel/Tenants"
-                            onClick={ () => handleLinkClick('/adminPanel/Tenants') }
-                            className={ `flex items-center mx-container ${activeLink === '/adminPanel/Tenants' ? 'text-[#013D6A] font-bold rounded bg-[#F1F9FF] py-3 px-3 rounded-md' : 'py-3 px-3'}` }>
-                            <FaRegUser className="mr-4" />
-                            <span>Tenants</span>
-                        </Link>
-                    </div>
+                <nav className='flex justify-center items-center w-full'>
+                    <div>
+                        <div className="">
+                            <Link
+                                href="/adminPanel/Dashboard"
+                                onClick={ () => handleLinkClick('/adminPanel/Dashboard') }
+                                className={ `flex items-center ${activeLink === '/adminPanel/Dashboard' ? 'text-[#013D6A] font-bold rounded bg-[#F1F9FF] py-3 px-3 rounded-md' : 'py-3 px-3'}` }
+                            >
+                                <MdOutlineDesktopMac className="mr-4" />
+                                <span>Dashboard</span>
+                            </Link>
+                        </div>
+                        <div className="">
+                            <Link href="/adminPanel/ExamsProfile"
+                                onClick={ () => handleLinkClick('/adminPanel/ExamsProfile') }
+                                className={ `flex items-center ${activeLink === '/adminPanel/ExamsProfile' ? 'text-[#013D6A] font-bold rounded bg-[#F1F9FF] py-3 px-3 rounded-md' : 'py-3 px-3'}` }>
+                                <ImProfile className="mr-4" />
+                                <span>Exams Profile</span>
+                            </Link>
+                        </div>
+                        <div className="">
+                            <Link href="/adminPanel/Results"
+                                onClick={ () => handleLinkClick('/adminPanel/Results') }
+                                className={ `flex items-center ${activeLink === '/adminPanel/Results' ? 'text-[#013D6A] font-bold rounded bg-[#F1F9FF] py-3 px-3 rounded-md' : 'py-3 px-3'}` }
+                            >
+                                <FaFile className="mr-4" />
+                                <span>Results</span>
+                            </Link>
+                        </div>
+                        <div className="">
+                            <Link
+                                href="/adminPanel/Storage"
+                                onClick={ () => handleLinkClick('/adminPanel/Storage') }
+                                className={ `flex items-center ${activeLink === '/adminPanel/Storage' ? 'text-[#013D6A] font-bold rounded bg-[#F1F9FF] py-3 px-3 rounded-md' : 'py-3 px-3'}` }
+                            >
+                                <GrStorage className="mr-4" />
+                                <span>Storage</span>
+                            </Link>
+                        </div>
+                        <div className="">
+                            <Link
+                                href="/adminPanel/Tenants"
+                                onClick={ () => handleLinkClick('/adminPanel/Tenants') }
+                                className={ `flex items-center mx-container ${activeLink === '/adminPanel/Tenants' ? 'text-[#013D6A] font-bold rounded bg-[#F1F9FF] py-3 px-3 rounded-md' : 'py-3 px-3'}` }>
+                                <FaRegUser className="mr-4" />
+                                <span>Tenants</span>
+                            </Link>
+                        </div>
 
-                    <div className="">
-                        <Link href="/adminPanel/Settings"
-                            onClick={ () => handleLinkClick('/adminPanel/Settings') }
-                            className={ `flex items-center mx-container ${activeLink === '/adminPanel/Settings' ? 'text-[#013D6A] font-bold rounded bg-[#F1F9FF] py-3 px-3 rounded-md' : 'py-3 px-3'}` }>
-                            <IoSettingsOutline className="mr-4" />
-                            <span>Settings</span>
-                        </Link>
+                        <div className="">
+                            <Link href="/adminPanel/Settings"
+                                onClick={ () => handleLinkClick('/adminPanel/Settings') }
+                                className={ `flex items-center mx-container ${activeLink === '/adminPanel/Settings' ? 'text-[#013D6A] font-bold rounded bg-[#F1F9FF] py-3 px-3 rounded-md' : 'py-3 px-3'}` }>
+                                <IoSettingsOutline className="mr-4" />
+                                <span>Settings</span>
+                            </Link>
+                        </div>
                     </div>
                 </nav>
                 <div className='flex flex-col justify-center items-center my-10'>
@@ -99,10 +101,9 @@ const Sidebar = () => {
                     <p>Need help?</p>
                 </div>
                 <div className='relative'>
-                    <button className='absolute left-9 bg-[#0791F8] text-white w-[202.62px] p-2 rounded-md flex justify-center items-center'>Go to help center</button>
-                    <p className='absolute left-20 top-16'>Version 2.0.2</p>
+                    <button className='bg-[#0791F8] text-white w-full p-2 rounded-md flex justify-center items-center'>Go to help center</button>
+                    <p className='flex items-center justify-center py-2'>Version 2.0.2</p>
                 </div>
-                {/* Add more links as needed */ }
             </aside>
         </div>
     );

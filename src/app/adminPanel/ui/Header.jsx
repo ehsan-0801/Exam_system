@@ -3,7 +3,7 @@ import Image from 'next/image';
 const Header = ({ header, subheader }) => {
     return (
         <div>
-            <div className='flex items-center justify-between'>
+            <div className='flex items-center justify-between px-2'>
                 <div>
                     <h1 className='text-2xl font-semibold'>{ header }</h1>
                     <p>{ subheader }</p>

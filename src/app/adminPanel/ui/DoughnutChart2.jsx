@@ -58,7 +58,7 @@ const DoughnutChart2 = () => {
         ],
     };
     return (
-        <div className="w-[300px] h-[200px] border-2 border-gray-400 ml-2 px-1 rounded-md">
+        <div className="w-full h-[200px] border-2 border-gray-400 ml-2 px-1 rounded-md">
             <Doughnut data={ finalData } options={ options } className="" />
         </div>
     );
