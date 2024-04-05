@@ -12,7 +12,7 @@ import { MdOutlineQuestionMark } from "react-icons/md";
 import { usePathname, useRouter } from 'next/navigation';
 const Sidebar = () => {
     const router = useRouter();
-    const [activeLink, setActiveLink] = useState(router.pathname); // Initial active link
+    const [activeLink, setActiveLink] = useState('/adminPanel/Dashboard'); // Set default active link
 
     const handleLinkClick = (href) => {
         setActiveLink(href); // Update activeLink on link click

@@ -1,9 +1,23 @@
-import React from 'react';
+"use client"
+import React, { useState } from 'react';
 import Header from '../ui/Header';
 import { CiSearch } from "react-icons/ci";
 import { FaPlus, FaRegUser } from "react-icons/fa6";
 import Userslist from '../ui/Userslist';
+import AddOrganization from '../ui/AddOrganization';
+import Drawer from 'react-modern-drawer'
+import { IoMdClose } from "react-icons/io";
+//import styles 👇
+import 'react-modern-drawer/dist/index.css'
+
 const Tenants = () => {
+    const [isOpen, setIsOpen] = useState(false)
+    const toggleDrawer = () => {
+        setIsOpen((prevState) => !prevState)
+    }
+    const handleCloseDrawer = () => {
+        setIsOpen(false);
+    }
     return (
         <div>
             <Header header={ 'Tenants' } subheader={ 'Total users and their licence info' } />
@@ -48,7 +62,28 @@ const Tenants = () => {
                             </select>
                         </div>
                         <div className='ml-4 mr-2'>
-                            <button className='bg-[#0791F8] text-white w-full p-1 rounded-md flex justify-center items-center'><FaPlus />Add Org</button>
+                            <button onClick={ toggleDrawer } className='bg-[#0791F8] text-white w-full p-1 rounded-md flex justify-center items-center'><FaPlus />Add Org</button>
+                            <Drawer
+                                open={ isOpen }
+                                onClose={ toggleDrawer }
+                                direction='right'
+                                className='bla bla bla'
+                                size={ 300 }
+                            >
+                                <div className='px-4 py-4'>
+                                    <div className='flex items-center justify-between'>
+                                        <p className='font-semibold'>Add Organization</p>
+                                        <div>
+                                            <button className='text-red-600' onClick={ handleCloseDrawer }>
+                                                <IoMdClose />
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div className='my-4'>
+                                        <AddOrganization />
+                                    </div>
+                                </div>
+                            </Drawer>
                         </div>
                     </div>
                 </div>

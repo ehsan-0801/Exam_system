@@ -1,8 +1,10 @@
 "use client"
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { FaUserCircle } from "react-icons/fa";
-import { BsThreeDotsVertical } from "react-icons/bs";
+import { BsThreeDotsVertical, BsPencilSquare, BsTrash, BsCheck2Circle } from "react-icons/bs";
 import { MdOutlineKeyboardArrowLeft, MdOutlineKeyboardArrowRight } from "react-icons/md";
+import Pagination from './Pagination';
+import Action from './Action';
 const Userslist = () => {
     const Data = [
         {
@@ -1156,11 +1158,8 @@ const Userslist = () => {
         (currentPage - 1) * itemsPerPage,
         currentPage * itemsPerPage
     );
-    const windowSize = 5; // Number of page numbers to display
 
-    // Calculate starting and ending page numbers dynamically
-    const startPage = Math.max(1, Math.min(currentPage - Math.floor(windowSize / 2), totalPages - windowSize + 1));
-    const endPage = Math.min(totalPages, startPage + windowSize - 1);
+
     return (
         <div>
             <table className="table-auto w-full text-left">
@@ -1182,38 +1181,14 @@ const Userslist = () => {
                             <td className="p-2">{ user.issued_date }</td>
                             <td className="p-2">{ user.expiry_date }</td>
                             <td className={ user.status == "Active" ? ` text-[#2E8760] font-bold p-2` : ` text-[#E71D36] font-bold p-2` }>{ user.status }</td>
-                            <td className="p-2"><BsThreeDotsVertical /></td>
+                            <td className="p-2">
+                                <Action />
+                            </td>
                         </tr>
                     )) }
                 </tbody>
             </table>
-            <div className="flex justify-center items-center mt-6">
-                <div>
-                    <button className="mx-10" onClick={ goToPreviousPage } disabled={ currentPage === 1 }>
-                        <MdOutlineKeyboardArrowLeft />
-                    </button>
-                </div>
-                <div className="flex items-center justify-around">
-                    { Array.from({ length: Math.min(totalPages, windowSize) }, (_, i) => (
-                        <button
-                            key={ i + startPage }
-                            onClick={ () => onPageChange(i + startPage) }
-                            className={ `px-3 py-1 mx-4 ${currentPage === i + startPage ? 'text-white bg-[#013D6A] px-3 py-1 rounded-full font-bold' : 'px-3 py-1'
-                                }` }
-                        >
-                            { i + startPage }
-                        </button>
-                    )) }
-                    { totalPages > windowSize + startPage - 1 && ( // Check if there are more pages beyond the current window
-                        <button className="mx-4 text-gray-400">... { totalPages }</button>
-                    ) }
-                </div>
-                <div>
-                    <button className="mx-10" onClick={ goToNextPage } disabled={ currentPage === totalPages }>
-                        <MdOutlineKeyboardArrowRight />
-                    </button>
-                </div>
-            </div>
+            <Pagination currentPage={ currentPage } totalPages={ totalPages } goToPreviousPage={ goToPreviousPage } goToNextPage={ goToNextPage } />
         </div>
     );
 };
