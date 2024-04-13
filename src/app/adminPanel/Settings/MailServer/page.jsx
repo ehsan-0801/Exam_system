@@ -1,11 +1,11 @@
 import React from 'react';
 
-const Settings = () => {
+const MailServer = () => {
     return (
         <div>
-            Settings
+            Mail Server
         </div>
     );
 };
 
-export default Settings;
+export default MailServer;

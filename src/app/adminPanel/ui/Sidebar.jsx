@@ -9,7 +9,7 @@ import { FaFile } from "react-icons/fa";
 import { GrStorage } from "react-icons/gr";
 import { IoSettingsOutline } from "react-icons/io5";
 import { MdOutlineQuestionMark } from "react-icons/md";
-import { usePathname, useRouter } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 const Sidebar = () => {
     const router = useRouter();
     const [activeLink, setActiveLink] = useState('/adminPanel/Dashboard'); // Set default active link
@@ -85,9 +85,9 @@ const Sidebar = () => {
                         </div>
 
                         <div className="">
-                            <Link href="/adminPanel/Settings"
-                                onClick={ () => handleLinkClick('/adminPanel/Settings') }
-                                className={ `flex items-center mx-container ${activeLink === '/adminPanel/Settings' ? 'text-[#013D6A] font-bold rounded bg-[#F1F9FF] py-3 px-3 rounded-md' : 'py-3 px-3'}` }>
+                            <Link href="/adminPanel/Settings/AccountSettings"
+                                onClick={ () => handleLinkClick('/adminPanel/Settings/AccountSettings') }
+                                className={ `flex items-center mx-container ${activeLink === '/adminPanel/Settings/AccountSettings' ? 'text-[#013D6A] font-bold rounded bg-[#F1F9FF] py-3 px-3 rounded-md' : 'py-3 px-3'}` }>
                                 <IoSettingsOutline className="mr-4" />
                                 <span>Settings</span>
                             </Link>

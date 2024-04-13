@@ -7,7 +7,7 @@ const Layout = ({ children }) => {
             <div className="fixed left-0 top-0 h-full  overflow-y-auto bg-gray-800 text-white shadow-md z-10 w-[250px]">
                 <Sidebar />
             </div>
-            <div className="flex-grow relative ml-[260px] mr-1"> {/* Add pl-64 for padding */ }
+            <div className="flex-grow relative ml-[260px] mr-1">
                 { children }
             </div>
         </div>

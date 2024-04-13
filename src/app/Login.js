@@ -4,8 +4,8 @@ import Image from 'next/image';
 
 const Login = () => {
     const [emailFocused, setEmailFocused] = useState(false);
-    const [passwordFocused, setPasswordFocused] = useState(false);
     const [emailValue, setEmailValue] = useState('');
+    const [passwordFocused, setPasswordFocused] = useState(false);
     const [passwordValue, setPasswordValue] = useState('');
 
     const handleEmailFocus = () => {

@@ -77,7 +77,7 @@ const Analytics = () => {
             <div className="w-full p-6 border-2 border-gray-400 shadow-md rounded-md mx-2">
                 <Bar options={ options } data={ data2 } />
             </div>
-            <div className=" relative p-6 border-2 border-gray-400 rounded-md">
+            <div className=" relative p-6 border-2 border-gray-400 shadow-md rounded-md">
                 <Doughnut
                     data={ data }
                     options={ {
