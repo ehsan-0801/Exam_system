@@ -1,6 +1,62 @@
+"use client"
 import Image from "next/image";
-import Link from "next/link"
+import Link from "next/link";
+import { useEffect, useRef, useState } from "react";
+import { useRouter } from "next/navigation";
+
 export default function Component() {
+
+    const router = useRouter();
+
+    const [subject, setSubject] = useState("")
+    const [examType, setExamType] = useState("")
+    const [mcqCategory, setMcqCategory] = useState("")
+    const [correctAns, setCorrectAns] = useState("")
+    const [wrongAns, setWrongAns] = useState("0")
+    const [bubbleThreshold, setBubbleThreshold] = useState("")
+    const [status, setStatus] = useState("private")
+
+    const formValue = {
+        subject: subject,
+        examType: examType,
+        mcqCategory: mcqCategory,
+        correctAns: correctAns,
+        wrongAns: wrongAns,
+        bubbleThreshold: bubbleThreshold,
+        status: status,
+    }
+    const goBack = () => {
+        router.back()
+    }
+
+    const nextPage = function () {
+        ///adminPanel/NewExam/CorrectAnsSheet1
+        window.localStorage.setItem('step_one_values', JSON.stringify(formValue));
+        router.push("./NewExam/CorrectAnsSheet1", { scroll: false });
+
+    }
+
+    const fetchData = () => {
+        const Data = JSON.parse(window.localStorage.getItem("step_one_values"))
+        console.log(Data)
+        setSubject(Data ? Data.subject : "")
+        setExamType(Data ? Data.examType : "")
+        setMcqCategory(Data ? Data.mcqCategory : "")
+        setCorrectAns(Data ? Data.correctAns : "")
+        setWrongAns(Data ? Data.wrongAns : "0")
+        setBubbleThreshold(Data ? Data.bubbleThreshold : "50")
+        setStatus(Data ? Data.status : "private")
+
+
+    }
+    useEffect(() => {
+        console.log(formValue)
+    }, [formValue])
+
+    useEffect(() => {
+        fetchData();
+    }, []);
+
     return (
         <div className="bg-white p-8">
             <div className="flex items-center border-b pb-4">
@@ -34,6 +90,8 @@ export default function Component() {
                         type="text"
                         required
                         className="block w-full border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 outline-none p-2"
+                        defaultValue={ subject }
+                        onChange={ (e) => setSubject(e.target.value) }
                     />
                 </div>
                 <div className="relative my-6">
@@ -45,11 +103,14 @@ export default function Component() {
                     </label>
                     <select
                         className="w-full rounded-md border border-gray-300 p-2 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+                        name="examType"
+                        defaultValue={ examType }
+                        onChange={ (e) => setExamType(e.target.value) }
                     >
-                        <option>
+                        <option value="Mid Term">
                             Mid Term
                         </option>
-                        <option>
+                        <option value="Final Term">
                             Final Term
                         </option>
                     </select>
@@ -63,12 +124,15 @@ export default function Component() {
                     </label>
                     <select
                         className="w-full rounded-md border border-gray-300 p-2 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+                        name="mcqCategory"
+                        defaultValue={ mcqCategory }
+                        onChange={ (e) => setMcqCategory(e.target.value) }
                     >
-                        <option>
-                            Mid Term
+                        <option value={ "50 mcq" } >
+                            50 MCQs
                         </option>
-                        <option>
-                            Final Term
+                        <option value={ "100 mcq" } >
+                            100 MCQs
                         </option>
                     </select>
                 </div>
@@ -80,12 +144,12 @@ export default function Component() {
                         Correct Answer Mark *
                     </label>
                     <input
-                        id="Subject"
-                        name="Subject"
                         type="text"
-                        value="1"
                         required
+                        name="correctAns"
+                        defaultValue={ correctAns }
                         className="block w-full border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 outline-none p-2"
+                        onChange={ (e) => setCorrectAns(e.target.value) }
                     />
                 </div>
                 <div className='relative my-6'>
@@ -96,12 +160,12 @@ export default function Component() {
                         Wrong Answer Mark *
                     </label>
                     <input
-                        id="Subject"
-                        name="Subject"
                         type="text"
-                        value="0"
+                        defaultValue={ wrongAns }
                         required
+                        name="wrongAns"
                         className="block w-full border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 outline-none p-2"
+                        onChange={ (e) => setWrongAns(e.target.value) }
                     />
                 </div>
             </div>
@@ -110,10 +174,13 @@ export default function Component() {
                     <div className="px-4 py-3">
                         <label className="block mb-2 font-medium">Bubble Threshold Adjustment</label>
                         <input
-                            className="w-full h-2 bg-blue-600 rounded-lg appearance-none cursor-pointer"
+                            className="block w-full py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md"
                             max="100"
                             min="0"
                             type="range"
+                            name="bubbleThreshold"
+                            defaultValue={ bubbleThreshold }
+                            onChange={ (e) => setBubbleThreshold(e.target.value) }
                         />
                     </div>
                     <div className="my-6 ">
@@ -124,13 +191,17 @@ export default function Component() {
                     <label className="block font-medium">Publish as</label>
                     <div className="flex items-center space-x-4">
                         <div className="flex items-center">
-                            <input className="w-4 h-4" id="private" name="publish" type="radio" value="private" />
-                            <label className="ml-2" htmlFor="private">
+                            { status == "private" ? <input className="w-4 h-4" type="radio" value="private" name="status"
+                                onChange={ (e) => setStatus(e.target.value) } defaultChecked /> : <input className="w-4 h-4" type="radio" value="private" name="status"
+                                    onChange={ (e) => setStatus(e.target.value) } /> }
+                            <label className="ml-2" htmlFor="private" >
                                 Private
                             </label>
                         </div>
                         <div className="flex items-center">
-                            <input className="w-4 h-4" id="public" name="publish" type="radio" value="public" />
+                            { status == "public" ? <input className="w-4 h-4" type="radio" value="public" name="status"
+                                onChange={ (e) => setStatus(e.target.value) } defaultChecked /> : <input className="w-4 h-4" type="radio" value="public" name="status"
+                                    onChange={ (e) => setStatus(e.target.value) } /> }
                             <label className="ml-2" htmlFor="public">
                                 Public
                             </label>
@@ -143,14 +214,14 @@ export default function Component() {
                 <h2 className="text-xl font-semibold mb-4">Upload or Scan Answer Sheets</h2>
                 <div className="flex flex-col items-center justify-center p-10 border-2 border-dashed rounded-lg">
                     <UploadIcon className="text-blue-500 w-12 h-12 mb-4" />
-                    <button variant="outline">Click To Upload Correct Answer Sheets</button>
+                    <button variant="outline" >Click To Upload Correct Answer Sheets</button>
                     <p className="text-sm text-gray-500 mt-2">JPG, PNG or PDF, file size no more than 10MB</p>
                 </div>
             </div>
             <div className="absolute right-10 bottom-6">
                 <div className="">
-                    <button className="px-14 py-3 bg-white">Previous</button>
-                    <Link href="/adminPanel/NewExam/CorrectAnsSheet1" className="px-14 py-3 bg-blue-500 text-white">Next</Link>
+                    <button className="px-14 py-3 bg-white" onClick={ goBack }>Previous</button>
+                    <button onClick={ nextPage } className="px-14 py-3 bg-blue-500 text-white">Next</button>
                 </div>
             </div>
         </div>

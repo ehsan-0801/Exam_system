@@ -1,27 +1,25 @@
 "use client";
 import React, { useState, useEffect } from 'react';
-import SpinningLoader from './SpinningLoader';
-import Swal from 'sweetalert2';
 
-const AddOrganization = () => {
-    const [selectedImage, setSelectedImage] = useState(null);
-    const [image, setImage] = useState(null);
+const AddOtherUsers = () => {
+    // const [selectedImage, setSelectedImage] = useState(null);
+    // const [image, setImage] = useState(null);
     const [name, setName] = useState('');
     const [address, setAddress] = useState('');
     const [purchaseDate, setPurchaseDate] = useState('');
     const [expiryDate, setExpiryDate] = useState('');
     const [isLoading, setIsLoading] = useState(false);
 
-    const handleChange = (event) => {
-        const file = event.target.files[0];
-        if (file) {
-            setImage(file);
-            setSelectedImage(URL.createObjectURL(file));
-        }
-    };
-    useEffect(() => {
-        console.log(image)
-    }, [image])
+    // const handleChange = (event) => {
+    //     const file = event.target.files[0];
+    //     if (file) {
+    //         setImage(file);
+    //         setSelectedImage(URL.createObjectURL(file));
+    //     }
+    // };
+    // useEffect(() => {
+    //     console.log(image)
+    // }, [image])
 
     const handleFormSubmit = async (e) => {
         e.preventDefault();
@@ -39,7 +37,6 @@ const AddOrganization = () => {
 
             if (res.ok) {
                 console.log('Form submitted successfully');
-                Swal.fire("Organization Added Successfully");
             } else {
                 console.error('Failed to submit form');
             }
@@ -51,13 +48,13 @@ const AddOrganization = () => {
     };
 
     if (isLoading) {
-        return <SpinningLoader></SpinningLoader>;
+        return <p>Loading...</p>;
     }
 
     return (
         <>
             <form onSubmit={ handleFormSubmit } method="POST">
-                <div className="relative flex items-center justify-center my-4">
+                {/* <div className="relative flex items-center justify-center my-4">
                     <input
                         type="file"
                         id="profile-image"
@@ -89,7 +86,7 @@ const AddOrganization = () => {
                             ) }
                         </div>
                     </label>
-                </div>
+                </div> */}
                 <div className="relative my-6">
                     <label
                         htmlFor="organization-name"
@@ -168,4 +165,4 @@ const AddOrganization = () => {
     );
 };
 
-export default AddOrganization;
+export default AddOtherUsers;

@@ -1,11 +1,25 @@
+"use client"
 import Image from "next/image";
 import Link from "next/link";
 import { FaPen } from "react-icons/fa6";
 import { IoCheckmarkDoneCircleOutline } from "react-icons/io5";
 import { IoMdClose } from "react-icons/io";
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 export default function Component() {
+    const router = useRouter()
+    const goBack = () => {
+        router.back()
+    }
+    useEffect(() => {
+        toast.success("All Answer Sheet Successfully Verified")
+
+    }, [])
     return (
         <div className="bg-white p-8">
+            <ToastContainer />
             <div className="flex items-center border-b pb-4">
                 <div className="border-r-2 border-gray-500 mr-3 w-44">
                     <h1 className="text-2xl font-bold">New Exam</h1>
@@ -24,20 +38,6 @@ export default function Component() {
                 </div>
             </div>
             <div >
-                <div className="flex items-center justify-end">
-                    <div className="flex items-center justify-around w-1/3 py-4 px-8 bg-[#E7F9EB] my-6 rounded shadow-md">
-                        <div>
-                            <p className="text-4xl"><IoCheckmarkDoneCircleOutline /></p>
-                        </div>
-                        <div>
-                            <p className="text-[#2E8760] font-semibold ">All Answer Sheet Successfully Verified</p>
-                            <p className="text-xs font-semibolds">Today 10:30PM</p>
-                        </div>
-                        <div className="relative">
-                            <p className="absolute -top-4 mx-1"><IoMdClose /></p>
-                        </div>
-                    </div>
-                </div>
                 <div className="flex items-center justify-around">
                     <div className="border-8 border-[#9AE2C8] relative">
                         <div className="absolute top-0 w-full bg-white flex items-center justify-between px-4 z-10 rounded shadow-lg">
@@ -91,7 +91,7 @@ export default function Component() {
             </div>
             <div className="absolute right-10 bottom-6">
                 <div className="">
-                    <button className="px-14 py-3 bg-white">Previous</button>
+                    <button className="px-14 py-3 bg-white" onClick={ goBack }>Previous</button>
                     <Link href="/adminPanel/Dashboard" className="px-14 py-3 bg-blue-500 text-white">Finish</Link>
                 </div>
             </div>

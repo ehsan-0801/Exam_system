@@ -1,0 +1,55 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url = env("POSTGRES_PRISMA_URL") // uses connection pooling
+  directUrl = env("POSTGRES_URL_NON_POOLING") // uses a direct connection
+}
+model User {
+  id            Int       @id @default(autoincrement())
+  name          String?
+  email         String?   @unique
+  password      String?
+  role          String?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+}
+model organization {
+  id              Int     @id @default(autoincrement())
+  org_name        String?
+  address         String?
+  image           String?
+  status          String?   
+  purchased_date  DateTime
+  expiry_date     DateTime  
+}
+model exam {
+  id                   Int         @id @default(autoincrement())
+  exam_type            String? 
+  mcq_category         String?
+  correct_ans          String?
+  Wrong_ans            String?
+  privacy              String?
+  bubble_threshold     String?
+  status               String?
+  exam_date            DateTime
+  batches              batch[]
+}
+model batch{
+  id                    Int        @id @default(autoincrement())
+  exam                  exam       @relation(fields: [exam_id], references: [id])
+  exam_id               Int
+  student_name          String?
+  roll_number           String?
+  register_number       String?
+  exam_answers          String?
+  status                String?
+}

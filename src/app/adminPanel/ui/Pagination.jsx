@@ -1,6 +1,6 @@
 import React from 'react';
 import { MdOutlineKeyboardArrowLeft, MdOutlineKeyboardArrowRight } from "react-icons/md";
-const Pagination = ({ currentPage, totalPages, goToPreviousPage, goToNextPage }) => {
+const Pagination = ({ currentPage, totalPages, goToPreviousPage, goToNextPage, onPageChange }) => {
 
 
     const windowSize = 5; // Number of page numbers to display

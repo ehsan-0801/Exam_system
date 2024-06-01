@@ -1,6 +1,21 @@
+"use client"
 import Image from "next/image";
 import Link from "next/link"
+import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 export default function Component() {
+    const router = useRouter();
+    const [data, setData] = useState(null)
+    const goBack = () => {
+        router.back()
+    }
+    const fetchSetValue = () => {
+        const Data = JSON.parse(window.localStorage.getItem("set_No"))
+        setData(Data);
+    }
+    useEffect(() => {
+        fetchSetValue();
+    }, [])
     const Questions = [
         {
             id: 1,
@@ -280,7 +295,7 @@ export default function Component() {
                         <Image src="/examsheet1.jpg" width={ 365 } height={ 700 } />
                     </div>
                     <div className="flex-1 p-4 border-2 border-gray-400 rounded-md ml-2">
-                        <h1 className="text-center mb-8 text-2xl">Set 1</h1>
+                        <h1 className="text-center mb-8 text-2xl">Set { data }</h1>
                         <div className="flex flex-wrap justify-around ">
                             { Questions.map((question, index) => (
                                 <div key={ question.id } className='relative my-1'>
@@ -306,7 +321,7 @@ export default function Component() {
             </div>
             <div className="absolute right-10 bottom-6">
                 <div className="">
-                    <button className="px-14 py-3 bg-white">Previous</button>
+                    <button className="px-14 py-3 bg-white" onClick={ goBack }>Previous</button>
                     <Link href="/adminPanel/NewExam/CorrectAnsSheet3" className="px-14 py-3 bg-blue-500 text-white">Save</Link>
                 </div>
             </div>

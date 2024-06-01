@@ -1,6 +1,22 @@
+"use client"
 import Image from "next/image";
-import Link from "next/link"
-export default function Component() {
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
+import { FaPen } from "react-icons/fa6";
+
+export default function Component({ formValue }) {
+    const router = useRouter();
+
+    const goBack = () => {
+        router.back();
+    }
+    const SendData = (data) => {
+        window.localStorage.removeItem("set_No");
+        window.localStorage.setItem('set_No', JSON.stringify(data));
+        router.push("./CorrectAnsSheet2");
+    };
+
     return (
         <div className="bg-white p-8">
             <div className="flex items-center border-b pb-4">
@@ -22,24 +38,60 @@ export default function Component() {
             </div>
             <div>
                 <div className="flex items-center justify-around">
-                    <div className="border-8 border-gray-300">
+                    <div className="border-8 border-gray-300 relative">
+                        <div className="absolute top-0 w-full bg-white flex items-center justify-between px-4 z-10 rounded shadow-lg">
+                            <span>
+                                <p>Set <span className="text-[#3D70F5]">A</span></p>
+                                <p>Count <span className="text-[#f30e0ef1] font-semibold">99</span></p>
+                            </span>
+                            <button onClick={ () => SendData("A") } className="bg-[#D9D9D9] border-2 rounded-md p-2">
+                                <FaPen />
+                            </button>
+                        </div>
                         <Image src="/examsheet1.jpg" width={ 280 } height={ 600 } />
                     </div>
 
-                    <div className="border-8 border-gray-300">
+                    <div className="border-8 border-gray-300 relative">
+                        <div className="absolute top-0 w-full bg-white flex items-center justify-between px-4 z-10 rounded shadow-lg">
+                            <div>
+                                <p>Set <span className="text-[#3D70F5]">B</span></p>
+                                <p>Count <span className="text-[#f30e0ef1] font-semibold">99</span></p>
+                            </div>
+                            <button onClick={ () => SendData("B") } className="bg-[#D9D9D9] border-2 rounded-md p-2">
+                                <FaPen />
+                            </button>
+                        </div>
                         <Image src="/examsheet2.jpg" width={ 280 } height={ 600 } />
                     </div>
-                    <div className="border-8 border-gray-300">
+                    <div className="border-8 border-gray-300 relative">
+                        <div className="absolute top-0 w-full bg-white flex items-center justify-between px-4 z-10 rounded shadow-lg">
+                            <div>
+                                <p>Set <span className="text-[#3D70F5]">C</span></p>
+                                <p>Count <span className="text-[#f30e0ef1]">99</span></p>
+                            </div>
+                            <button onClick={ () => SendData("C") } className="bg-[#D9D9D9] border-2 rounded-md p-2">
+                                <FaPen />
+                            </button>
+                        </div>
                         <Image src="/examsheet3.jpg" width={ 280 } height={ 600 } />
                     </div>
-                    <div className="border-8 border-gray-300">
+                    <div className="border-8 border-gray-300 relative">
+                        <div className="absolute top-0 w-full bg-white flex items-center justify-between px-4 z-10 rounded shadow-lg">
+                            <div>
+                                <p>Set <span className="text-[#3D70F5]">D</span></p>
+                                <p>Count <span className="text-[#f30e0ef1]">99</span></p>
+                            </div>
+                            <button onClick={ () => SendData("C") } className="bg-[#D9D9D9] border-2 rounded-md p-2">
+                                <FaPen />
+                            </button>
+                        </div>
                         <Image src="/examsheet4.jpg" width={ 280 } height={ 600 } />
                     </div>
                 </div>
             </div>
             <div className="absolute right-10 bottom-6">
                 <div className="">
-                    <button className="px-14 py-3 bg-white">Previous</button>
+                    <button className="px-14 py-3 bg-white" onClick={ goBack }>Previous</button>
                     <Link href="/adminPanel/NewExam/CorrectAnsSheet2" className="px-14 py-3 bg-blue-500 text-white">Next</Link>
                 </div>
             </div>

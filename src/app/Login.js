@@ -1,8 +1,16 @@
 "use client";
-import React, { useState } from 'react';;
+import React, { useState, useEffect } from 'react';;
 import Image from 'next/image';
+import { signIn } from "next-auth/react";
+import { useRouter } from "next/navigation";
+import { PrismaClient } from "@prisma/client";
+import SpinningLoader from './adminPanel/ui/SpinningLoader';
+import { toast, ToastContainer } from 'react-toastify';
+
 
 const Login = () => {
+    const router = useRouter()
+    const prisma = new PrismaClient();
     const [emailFocused, setEmailFocused] = useState(false);
     const [emailValue, setEmailValue] = useState('');
     const [passwordFocused, setPasswordFocused] = useState(false);
@@ -12,11 +20,6 @@ const Login = () => {
         setEmailFocused(true);
     };
 
-    const handleEmailBlur = () => {
-        if (!emailValue) {
-            setEmailFocused(false);
-        }
-    };
 
     const handleEmailChange = (e) => {
         setEmailValue(e.target.value);
@@ -26,17 +29,47 @@ const Login = () => {
         setPasswordFocused(true);
     };
 
-    const handlePasswordBlur = () => {
-        if (!passwordValue) {
-            setPasswordFocused(false);
-        }
-    };
 
     const handlePasswordChange = (e) => {
         setPasswordValue(e.target.value);
     };
+
+    const [email, setEmail] = useState();
+    const [password, setPassword] = useState();
+    const [error, setError] = useState("");
+    const [emailInPutError, setEmailInputError] = useState(false);
+    const [passwordInPutError, setPasswordInputError] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
+
+
+
+    async function handleSubmit(e) {
+        e.preventDefault();
+        setIsLoading(true);
+        const signInData = await signIn('credentials', {
+            email: email,
+            password: password,
+            redirect: false,
+        });
+        if (signInData?.error) {
+            setIsLoading(false)
+            toast.warning("Invalid Email or Passoword")
+        }
+        else {
+            router.refresh()
+            router.push('./adminPanel/Dashboard');
+        }
+    }
+    if (isLoading) {
+        return (
+            <>
+                <SpinningLoader></SpinningLoader>;
+            </>
+        );
+    }
     return (
         <div className="min-h-screen flex">
+            <ToastContainer />
             <div className="flex-1 flex items-center justify-center bg-white">
                 <div className="w-[435px] p-8 bg-white shadow-md rounded-lg">
                     <Image src="/image 5.png" alt="Illustration" width={ 100 } height={ 100 } className='mb-32 mx-auto' />
@@ -44,7 +77,7 @@ const Login = () => {
                         <h2 className="text-3xl font-bold text-gray-800 text-left">Login</h2>
                         <h5 className='text-left mt-4'>Please login to continue to your account.</h5>
                     </div>
-                    <form className="mt-8 space-y-6">
+                    <form className="mt-8 space-y-6" onSubmit={ handleSubmit }>
                         <div>
                             <div className='relative'>
                                 <label
@@ -55,14 +88,16 @@ const Login = () => {
                                 </label>
                                 <input
                                     onFocus={ handleEmailFocus }
-                                    onBlur={ handleEmailBlur }
-                                    onChange={ handleEmailChange }
+                                    onChange={ (e) => {
+                                        setEmail(e.target.value), handleEmailChange;
+                                    } }
                                     id="email"
                                     name="email"
                                     type="email"
                                     autoComplete="email"
                                     required
                                     className={ `p-3 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 outline-none ${emailFocused || emailValue ? 'p-3' : ''}` }
+
                                 />
                             </div>
                             <div className='relative mt-6'>
@@ -74,8 +109,9 @@ const Login = () => {
                                 </label>
                                 <input
                                     onFocus={ handlePasswordFocus }
-                                    onBlur={ handlePasswordBlur }
-                                    onChange={ handlePasswordChange }
+                                    onChange={ (e) => {
+                                        setPassword(e.target.value), handlePasswordChange;
+                                    } }
                                     id="password"
                                     name="password"
                                     type="password"
@@ -99,10 +135,13 @@ const Login = () => {
                             <a href="#" className="text-sm text-blue-500 hover:underline">Forgot password?</a>
                         </div>
                         <div>
-                            <a href='/adminPanel/Dashboard' type="submit" className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                            <button type="submit" className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
                                 Sign in
-                            </a>
+                            </button>
                         </div>
+                        {
+                            error ? <p>{ error }</p> : ""
+                        }
                     </form>
                 </div>
             </div>

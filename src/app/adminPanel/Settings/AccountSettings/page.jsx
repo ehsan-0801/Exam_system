@@ -1,10 +1,10 @@
 import React from 'react';
-import PersonalInfoForm from '../../ui/PersonalInfoForm';
+import DataInputForm from '../../ui/DataInputForm';
 const AccountSettings = () => {
 
     return (
         <div>
-            <PersonalInfoForm />
+            <DataInputForm />
         </div>
     );
 };
