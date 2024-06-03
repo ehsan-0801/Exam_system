@@ -2,18 +2,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { BsThreeDotsVertical, BsPencilSquare, BsTrash, BsCheck2Circle } from "react-icons/bs";
 
-const examData = { // Replace with your actual exam data fetching logic
-    createdBy: 'Rafiqul Islam Rana',
-    date: '13-11-23',
-    title: 'Medical Exam May 2024',
-    subject: 'Engineering Drawing',
-    correctMarks: 1,
-    wrongMarks: 1,
-    mcqCount: 50,
-    published: false, // Add a published property if needed
-};
-
-const ExamDetails = () => {
+const ExamDetails = ({ exam }) => {
     const [showDropdown, setShowDropdown] = useState(false);
     const dropdownRef = useRef(null);
 
@@ -49,18 +38,28 @@ const ExamDetails = () => {
         // Implement publish logic here (e.g., API call to mark as published)
         console.log('Publish clicked');
     };
+    const formattedDate = (date) => {
+        try {
+            let dt = new Date(date);
+            const formattedDate = dt.toISOString().substring(0, 10);
+            return formattedDate;
+        }
+        catch (e) {
+            return date;
+        }
+    }
 
     return (
-        <div className='border-2 border-gray-300 p-3'>
+        <div className='border-2 border-gray-300 p-2 rounded'>
             <div className='flex items-center justify-between'>
                 <div>
                     <div className='grid grid-cols-2 my-4'>
                         <h1>Created By</h1>
-                        <p className='text-[#914AD9] font-bold'>: { examData.createdBy }</p>
+                        <p className='text-[#914AD9] font-bold'>: { exam?.user.name }</p>
                     </div>
                     <div className='grid grid-cols-2'>
                         <h1>Date</h1>
-                        <p className='text-[#914AD9] font-bold'>: { examData.date }</p>
+                        <p className='text-[#914AD9] font-bold'>: { formattedDate(exam?.exam_date) }</p>
                     </div>
                 </div>
                 <div className='ml-4 relative'>
@@ -85,18 +84,18 @@ const ExamDetails = () => {
                 </div>
             </div>
             <div className='my-4'>
-                <p className='text-[24px] font-[500]'>{ examData.title }</p>
-                <p>Subject: { examData.subject }</p>
+                <p className='text-[24px] font-[500]'>{ exam.exam_type }</p>
+                <p>Subject: { exam.subject }</p>
             </div>
             <div className='flex items-center justify-between'>
                 <p className='text-[#5B93FF] text-xs font-bold p-2 rounded bg-[#dcdfe5]'>
-                    Correct Mark: { examData.correctMarks }
+                    Correct Mark: { exam.correct_ans }
                 </p>
                 <p className='text-[#E71D36] text-xs font-bold p-2 rounded bg-[#f7d1d1]'>
-                    Wrong Mark: { examData.wrongMarks }
+                    Wrong Mark: { exam.Wrong_ans }
                 </p>
                 <p className='text-[#3A974C] text-xs font-bold p-2 rounded bg-[#cbe3c7]'>
-                    MCQ: { examData.mcqCount }
+                    MCQ: { exam.mcq_category }
                 </p>
             </div>
         </div>

@@ -36,7 +36,7 @@ export const authOptions = {
                     return null
                 }
                 return {
-                    id: `${existingUser.id}`,
+                    id: existingUser.id,
                     name: existingUser.name,
                     email: existingUser.email,
                     role: existingUser.role,
@@ -49,6 +49,7 @@ export const authOptions = {
             if (user) {
                 return {
                     ...token,
+                    id: user.id,
                     name: user.name,
                     role: user.role,
                 };
@@ -61,6 +62,7 @@ export const authOptions = {
                 ...session,
                 user: {
                     ...session.user,
+                    id: token.id,
                     name: token.name,
                     email: token.email,
                     role: token.role,

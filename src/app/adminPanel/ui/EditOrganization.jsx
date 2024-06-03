@@ -4,10 +4,6 @@ import SpinningLoader from './SpinningLoader';
 import Swal from 'sweetalert2';
 
 const EditOrganization = ({ id }) => {
-    // const [name, setName] = useState('');
-    // const [address, setAddress] = useState('');
-    // const [purchaseDate, setPurchaseDate] = useState('');
-    // const [expiryDate, setExpiryDate] = useState('');
     const nameRef = useRef(null);
     const addressRef = useRef(null);
     const purchaseDateRef = useRef(null);

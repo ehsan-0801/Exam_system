@@ -4,9 +4,9 @@ const prisma = new PrismaClient();
 import { put } from '@vercel/blob';
 
 export async function POST(req) {
-    console.log(req.body)
+    // console.log(req.body)
     const body = await req.json()
-    console.log(body)
+    // console.log(body)
     const { name, address, purchaseDate, expiryDate } = body;
     try {
 

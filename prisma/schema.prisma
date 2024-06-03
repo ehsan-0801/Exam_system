@@ -21,6 +21,7 @@ model User {
   role          String?
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt
+  exams         exam[]
 }
 model organization {
   id              Int     @id @default(autoincrement())
@@ -33,15 +34,17 @@ model organization {
 }
 model exam {
   id                   Int         @id @default(autoincrement())
+  subject              String?
   exam_type            String? 
   mcq_category         String?
   correct_ans          String?
   Wrong_ans            String?
-  privacy              String?
   bubble_threshold     String?
   status               String?
-  exam_date            DateTime
+  exam_date            DateTime         
   batches              batch[]
+  user_id              Int
+  user                 User     @relation(fields: [user_id], references: [id])
 }
 model batch{
   id                    Int        @id @default(autoincrement())
@@ -50,6 +53,6 @@ model batch{
   student_name          String?
   roll_number           String?
   register_number       String?
-  exam_answers          String?
+  exam_answers          String?   
   status                String?
 }
