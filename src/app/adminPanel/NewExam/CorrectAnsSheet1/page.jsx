@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 import { FaPen } from "react-icons/fa6";
+import { ToastContainer } from "react-toastify";
 
 export default function Component({ formValue }) {
     const router = useRouter();
@@ -19,6 +20,7 @@ export default function Component({ formValue }) {
 
     return (
         <div className="bg-white p-8">
+            <ToastContainer />
             <div className="flex items-center border-b pb-4">
                 <div className="border-r-2 border-gray-500 mr-3 w-44">
                     <h1 className="text-2xl font-bold">New Exam</h1>

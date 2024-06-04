@@ -23,3 +23,20 @@ export async function GET(request, { params }) {
         return Response.json({ Message: "failed", status: 500 })
     }
 }
+export async function DELETE(req, { params }) {
+    const id = parseInt(params.id);
+    // console.log(id)
+    try {
+        const exam = await prisma.exam.delete(
+            {
+                where: { id: id }
+            }
+        )
+        console.log("Successful")
+        return Response.json({ Message: "Exam Profile Deleted" })
+    } catch (error) {
+        console.error("Error finding Exam Profile:", error);
+        return Response.json({ Message: "failed", status: 500 })
+    }
+
+}

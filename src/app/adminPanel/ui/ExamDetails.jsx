@@ -1,10 +1,13 @@
 "use client"
 import React, { useState, useRef, useEffect } from 'react';
 import { BsThreeDotsVertical, BsPencilSquare, BsTrash, BsCheck2Circle } from "react-icons/bs";
+import Swal from 'sweetalert2';
 
-const ExamDetails = ({ exam }) => {
+const ExamDetails = ({ exam, fetchData }) => {
     const [showDropdown, setShowDropdown] = useState(false);
     const dropdownRef = useRef(null);
+    const examId = parseInt(exam.id);
+    console.log(examId);
 
     const handleClickOutside = (event) => {
         if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
@@ -15,7 +18,7 @@ const ExamDetails = ({ exam }) => {
     useEffect(() => {
         document.addEventListener('click', handleClickOutside);
         return () => document.removeEventListener('click', handleClickOutside);
-    }, []); // Empty dependency array ensures the event listener is added/removed only once
+    }, []);
 
     const handleDropdownClick = () => {
         setShowDropdown(!showDropdown);
@@ -27,10 +30,36 @@ const ExamDetails = ({ exam }) => {
         console.log('Edit clicked');
     };
 
-    const handleDeleteClick = () => {
+    const handleDeleteClick = async (id) => {
         setShowDropdown(false);
-        // Implement delete logic here (e.g., confirmation prompt, API call)
-        console.log('Delete clicked');
+        try {
+            const result = await Swal.fire({
+                title: "Are you sure?",
+                text: "You won't be able to revert this!",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Yes, delete it!"
+            });
+
+            if (result.isConfirmed) {
+                const res = await fetch(`http://localhost:3000/api/exam/${id}`, {
+                    method: 'DELETE',
+                });
+
+                if (res.ok) {
+                    console.log('Exam Profile deleted successfully');
+                    Swal.fire("Deleted!", "The exam profile has been deleted.", "success");
+                    fetchData(); // Refetch the data after deletion
+                } else {
+                    console.error('Failed to delete Exam Profile');
+                    Swal.fire('Failed to delete Exam Profile');
+                }
+            }
+        } catch (error) {
+            console.error('Error:', error);
+        }
     };
 
     const handlePublishClick = () => {
@@ -38,16 +67,16 @@ const ExamDetails = ({ exam }) => {
         // Implement publish logic here (e.g., API call to mark as published)
         console.log('Publish clicked');
     };
+
     const formattedDate = (date) => {
         try {
             let dt = new Date(date);
             const formattedDate = dt.toISOString().substring(0, 10);
             return formattedDate;
-        }
-        catch (e) {
+        } catch (e) {
             return date;
         }
-    }
+    };
 
     return (
         <div className='border-2 border-gray-300 p-2 rounded'>
@@ -65,15 +94,15 @@ const ExamDetails = ({ exam }) => {
                 <div className='ml-4 relative'>
                     <BsThreeDotsVertical onClick={ handleDropdownClick } />
                     { showDropdown && (
-                        <div className='absolute right-0  shadow-md bg-white rounded-md'>
+                        <div className='absolute right-0 shadow-md bg-white rounded-md'>
                             <ul className='p-2'>
                                 <li className='hover:bg-gray-200 p-2 flex items-center' onClick={ handleEditClick }>
                                     <BsPencilSquare className='mr-2' /> Edit
                                 </li>
-                                <li className='hover:bg-gray-200 p-2 flex items-center' onClick={ handleDeleteClick }>
+                                <li className='hover:bg-gray-200 p-2 flex items-center' onClick={ () => handleDeleteClick(examId) }>
                                     <BsTrash className='mr-2' /> Delete
                                 </li>
-                                { !examData.published && ( // Conditionally render publish option
+                                { exam.status == "private" && (
                                     <li className='hover:bg-gray-200 p-2 flex items-center' onClick={ handlePublishClick }>
                                         <BsCheck2Circle className='mr-2' /> Publish
                                     </li>

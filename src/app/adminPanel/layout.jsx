@@ -2,7 +2,7 @@ import React from 'react';
 import Sidebar from './ui/Sidebar'; // Import the Sidebar component
 import UserSessionProvider from './UserSessionProvider';
 import RequireAuth from './RequireAuth';
-
+import 'react-toastify/dist/ReactToastify.css';
 const Layout = ({ children }) => {
     return (
         <UserSessionProvider>

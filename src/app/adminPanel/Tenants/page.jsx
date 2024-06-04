@@ -1,64 +1,60 @@
-"use client"
-import React, { useState } from 'react';
+"use client";
+import React, { useState, useEffect } from 'react';
 import Header from '../ui/Header';
 import { CiSearch } from "react-icons/ci";
-import { FaPlus, FaRegUser } from "react-icons/fa6";
+import { FaPlus } from "react-icons/fa";
 import Userslist from '../ui/Userslist';
 import AddOrganization from '../ui/AddOrganization';
-import Drawer from 'react-modern-drawer'
+import Drawer from 'react-modern-drawer';
 import { IoMdClose } from "react-icons/io";
-//import styles 👇
-import 'react-modern-drawer/dist/index.css'
+import 'react-modern-drawer/dist/index.css';
 
 const Tenants = () => {
-    const [isOpen, setIsOpen] = useState(false)
+    const [isOpen, setIsOpen] = useState(false);
+    const [tenants, setTenants] = useState([]);
+    const [loading, setLoading] = useState(true);
+
     const toggleDrawer = () => {
-        setIsOpen((prevState) => !prevState)
-    }
+        setIsOpen((prevState) => !prevState);
+    };
     const handleCloseDrawer = () => {
         setIsOpen(false);
-    }
+    };
+
+    const fetchData = async () => {
+        try {
+            const response = await fetch("http://localhost:3000/api/organization/");
+            const Tenants = await response.json();
+            setTenants(Tenants);
+            setLoading(false);
+        } catch (error) {
+            console.error("Error fetching data:", error);
+            setLoading(false);
+        }
+    };
+
+    useEffect(() => {
+        fetchData();
+    }, []);
+
     return (
         <div>
             <Header header={ 'Tenants' } subheader={ 'Total users and their licence info' } />
-            <div className='border-2  rounded-md shadow-md p-4 mt-2 mx-2'>
+            <div className='border-2 rounded-md shadow-md p-4 mt-2 mx-2'>
                 <div className='flex items-center justify-between'>
                     <div>
                         <h1 className='font-bold'>Users</h1>
                     </div>
                     <div className="flex items-center justify-center">
                         <div className='flex items-center border-2 border-gray-400 rounded-md px-1 ml-4'>
-                            <label htmlFor="" className=''><CiSearch /></label>
+                            <label><CiSearch /></label>
                             <input className="outline-none" type="search" placeholder='Search Users' />
                         </div>
                         <div className='ml-4 mr-2'>
-                            <select
-                                className="w-full rounded-md border border-gray-300 p-1 outline-none mx-4"
-                            >
-                                <option>
-                                    Filter
-                                </option>
-                                <option>
-                                    Last Month
-                                </option>
-                                <option>
-                                    Last Year
-                                </option>
-                            </select>
-                        </div>
-                        <div className='ml-4 mr-2'>
-                            <select
-                                className="w-full rounded-md border border-gray-300 p-1 outline-none mx-4"
-                            >
-                                <option>
-                                    Filter
-                                </option>
-                                <option>
-                                    Last Month
-                                </option>
-                                <option>
-                                    Last Year
-                                </option>
+                            <select className="w-full rounded-md border border-gray-300 p-1 outline-none mx-4">
+                                <option>Filter</option>
+                                <option>Last Month</option>
+                                <option>Last Year</option>
                             </select>
                         </div>
                         <div className='ml-4 mr-2'>
@@ -73,14 +69,12 @@ const Tenants = () => {
                                 <div className='px-4 py-4'>
                                     <div className='flex items-center justify-between'>
                                         <p className='font-semibold'>Add Organization</p>
-                                        <div>
-                                            <button className='text-red-600' onClick={ handleCloseDrawer }>
-                                                <IoMdClose />
-                                            </button>
-                                        </div>
+                                        <button className='text-red-600' onClick={ handleCloseDrawer }>
+                                            <IoMdClose />
+                                        </button>
                                     </div>
                                     <div className='my-4'>
-                                        <AddOrganization />
+                                        <AddOrganization fetchData={ fetchData } />
                                     </div>
                                 </div>
                             </Drawer>
@@ -88,11 +82,10 @@ const Tenants = () => {
                     </div>
                 </div>
                 <div>
-                    <Userslist />
+                    <Userslist tenants={ tenants } fetchData={ fetchData } loading={ loading } />
                 </div>
             </div>
-
-        </div >
+        </div>
     );
 };
 

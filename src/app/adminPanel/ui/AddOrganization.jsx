@@ -11,6 +11,7 @@ const AddOrganization = () => {
     const [purchaseDate, setPurchaseDate] = useState('');
     const [expiryDate, setExpiryDate] = useState('');
     const [isLoading, setIsLoading] = useState(false);
+    const [status, setStatus] = useState("Active")
 
     const handleChange = (event) => {
         const file = event.target.files[0];
@@ -34,7 +35,7 @@ const AddOrganization = () => {
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({ name, address, purchaseDate, expiryDate }),
+                body: JSON.stringify({ name, address, purchaseDate, expiryDate, status }),
             });
 
             if (res.ok) {

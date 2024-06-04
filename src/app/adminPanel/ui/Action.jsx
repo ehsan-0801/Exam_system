@@ -9,7 +9,7 @@ import Link from 'next/link';
 import EditOrganization from './EditOrganization';
 import Swal from 'sweetalert2';
 
-const Action = ({ tenant_id }) => {
+const Action = ({ tenant_id, fetchData }) => {
     const [showDropdown, setShowDropdown] = useState(false);
     const dropdownRef = useRef(null);
 
@@ -34,24 +34,36 @@ const Action = ({ tenant_id }) => {
     const handleCloseDrawer = () => {
         setIsOpen(false);
     }
-    const handleDelete = async (id) => {
+    const handleDeleteClick = async (id) => {
         try {
-            const res = await fetch(`http://localhost:3000/api/organization/${id}`, {
-                method: 'DELETE',
+            const result = await Swal.fire({
+                title: "Are you sure?",
+                text: "You won't be able to revert this!",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Yes, delete it!"
             });
 
-            if (res.ok) {
-                console.log('Organization deleted successfully');
-                Swal.fire("organization Deleted")
-                // Handle successful deletion (e.g., redirect, display success message)
-            } else {
-                console.error('Failed to delete organization');
-                // Handle errors (e.g., display error message)
+            if (result.isConfirmed) {
+                const res = await fetch(`http://localhost:3000/api/organization/${id}`, {
+                    method: 'DELETE',
+                });
+
+                if (res.ok) {
+                    console.log('Organization deleted successfully');
+                    Swal.fire("Deleted!", "The organization has been deleted.", "success");
+                    fetchData(); // Refetch the data after deletion
+                } else {
+                    console.error('Failed to delete organization');
+                    Swal.fire('Failed to delete organization');
+                }
             }
         } catch (error) {
             console.error('Error:', error);
         }
-    }
+    };
     return (
         <div className='relative '>
             <BsThreeDotsVertical onClick={ handleDropdownClick } />
@@ -62,22 +74,8 @@ const Action = ({ tenant_id }) => {
                         <li className='hover:bg-gray-200 p-2 '>
                             <button onClick={ toggleDrawer } className='flex items-center'><BsPencilSquare className='mr-2' /> Edit</button>
                         </li>
-                        <li className='hover:bg-gray-200 p-2 flex items-center'>
-                            <button onClick={
-                                Swal.fire({
-                                    title: "Are you sure?",
-                                    text: "You won't be able to revert this!",
-                                    icon: "warning",
-                                    showCancelButton: true,
-                                    confirmButtonColor: "#3085d6",
-                                    cancelButtonColor: "#d33",
-                                    confirmButtonText: "Yes, delete it!"
-                                }).then((result) => {
-                                    if (result.isConfirmed) {
-                                        handleDelete(tenant_id)
-                                    }
-                                })
-                            }>
+                        <li className=''>
+                            <button className='hover:bg-gray-200 p-2 flex items-center' onClick={ () => handleDeleteClick(tenant_id) }>
                                 <BsTrash className='mr-2' /> Delete
                             </button>
                         </li>

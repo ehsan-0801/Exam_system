@@ -5,7 +5,7 @@ const prisma = new PrismaClient();
 
 export async function GET(request, { params }) {
     try {
-        const id = params.id;
+        const id = parseInt(params.id);
 
         const org = await prisma.organization.findUnique({ where: { id: id } });
         if (org) {
@@ -21,7 +21,7 @@ export async function GET(request, { params }) {
     }
 }
 export async function PUT(req, { params }) {
-    const id = params.id;
+    const id = parseInt(params.id);
     console.log(req.body)
     const body = await req.json()
     console.log(body)
@@ -49,7 +49,7 @@ export async function PUT(req, { params }) {
     }
 }
 export async function DELETE(req, { params }) {
-    const id = params.id;
+    const id = parseInt(params.id);
     try {
         const organization = await prisma.organization.delete(
             {

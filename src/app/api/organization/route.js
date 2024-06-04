@@ -7,7 +7,7 @@ export async function POST(req) {
     // console.log(req.body)
     const body = await req.json()
     // console.log(body)
-    const { name, address, purchaseDate, expiryDate } = body;
+    const { name, address, status, purchaseDate, expiryDate } = body;
     try {
 
         // const imageUrl = await put(imagefile.name, req.body, { access: 'public' })
@@ -15,6 +15,7 @@ export async function POST(req) {
             data: {
                 org_name: name,
                 address: address,
+                status: status,
                 purchased_date: new Date(purchaseDate),
                 expiry_date: new Date(expiryDate),
             },
